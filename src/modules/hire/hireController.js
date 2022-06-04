@@ -35,22 +35,30 @@ module.exports = {
       };
       const result = await hireModel.createHire(dataCreate);
       const user = await hireModel.getUserById(result.userId);
-      const company = await hireModel.getCompanyById(companyId);
 
-      const dataMailing = {
-        to: user.email,
-        subject: result.subject,
-        template: "hiring.html",
-      };
-
-      await helperMailer.sendMail(dataMailing);
-
-      return helperWrapper.response(
-        response,
-        200,
-        "Success post data, your email was sent to the user",
-        result
-      );
+      if (user.length > 0) {
+        const company = await hireModel.getCompanyById(companyId);
+        const dataMailing = {
+          to: user.email,
+          subject: result.subject,
+          template: "hiring.html",
+        };
+        await helperMailer.sendMail(dataMailing);
+        return helperWrapper.response(
+          response,
+          200,
+          "Success post data, your email was sent to the user",
+          result
+        );
+      } else {
+        const deleteHire = await hireModel.deleteHire(result.id);
+        return helperWrapper.response(
+          response,
+          200,
+          "email failed to send",
+          deleteHire
+        );
+      }
     } catch (error) {
       return helperWrapper.response(response, 404, "Bad request", null);
     }

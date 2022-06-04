@@ -53,4 +53,14 @@ module.exports = {
         }
       );
     }),
+  deleteHire: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query("DELETE FROM hire WHERE id=?", id, (error) => {
+        if (!error) {
+          resolve(id);
+        } else {
+          reject(new Error(error.sqlMessage));
+        }
+      });
+    }),
 };
