@@ -7,12 +7,18 @@ module.exports = {
   },
   extends: ["airbnb-base", "prettier"],
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 12,
     sourceType: "module",
   },
   plugins: ["prettier"],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     "prefer-destructuring": ["error", { object: true, array: false }],
+    treatUndefinedAsUnspecified: true,
   },
 };

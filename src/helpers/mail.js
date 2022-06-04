@@ -7,7 +7,6 @@ const mustache = require("mustache");
 const clientId = process.env.MAIL_CLIENT_ID;
 const clientSecret = process.env.MAIL_CLIENT_SECRET;
 const refreshToken = process.env.MAIL_REFRESH_TOKEN;
-
 const { OAuth2 } = google.auth;
 const OAuth2Client = new OAuth2(clientId, clientSecret);
 OAuth2Client.setCredentials({
@@ -22,21 +21,20 @@ module.exports = {
         service: "gmail",
         auth: {
           type: "OAuth2",
-          user: "rancak.webdev@gmail.com",
+          user: "itjobsproject@gmail.com",
           clientId,
           clientSecret,
           refreshToken,
           accessToken,
         },
       });
-
       const fileTemplate = fs.readFileSync(
-        `src/templates/email/${data.template}`,
+        `/src/template/email/${data.template}`,
         "utf8"
       );
-
+      console.log(fileTemplate);
       const mailOption = {
-        from: '"Tickitix" <rancak.webdev@gmail.com>',
+        from: '"ITjobs" <itjobsproject@gmail.com>',
         to: data.to,
         subject: data.subject,
         html: mustache.render(fileTemplate, { ...data }),
