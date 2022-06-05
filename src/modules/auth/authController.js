@@ -417,24 +417,6 @@ module.exports = {
           null
         );
       }
-      //   const setSendEmail = {
-      //     to: email,
-      //     subject: "Email Verification !",
-      //     name: fullName,
-      //     template: "emailSend.html",
-      //     buttonUrl: `localhost:3001/auth/activate/${setData.id}`,
-      //   };
-      // const sendEmail = setSendEmail.buttonUrl;
-      // if (!setSendEmail.email) {
-      //   return helperWrapper.response(
-      //     response,
-      //     400,
-      //     "activate your account",
-      //     null
-      //   );
-      // }
-      //   await sendMail(setSendEmail);
-      // activation code
       const result = await authModel.registerCompany(setData);
       //   const dataId = result.email;
       return helperWrapper.response(
@@ -539,6 +521,93 @@ module.exports = {
         });
       });
     } catch (error) {
+      return helperWrapper.response(response, 400, "Bad Request", null);
+    }
+  },
+  forgotPasswordCompany: async (request, response) => {
+    try {
+      // pasword hash
+      const { email, linkDirect } = request.body;
+      const dataEmail = await authModel.getEmailCompany(email);
+      if (dataEmail.length < 1) {
+        return helperWrapper.response(
+          response,
+          404,
+          "email not registed",
+          null
+        );
+      }
+      const otp = Math.floor(Math.random() * 899999 + 100000);
+
+      const setSendEmail = {
+        to: email,
+        subject: "Forgot Password Verification!",
+        template: "forgotPassword.html",
+        otpKey: otp,
+        buttonUrl: otp,
+      };
+      await helperMailer.sendMail(setSendEmail);
+      // activation code
+      const result = await authModel.setOTPCompany(email, otp);
+      return helperWrapper.response(
+        response,
+        200,
+        `email valid check your email box for reset password `,
+        email
+      );
+    } catch (error) {
+      console.log(error);
+
+      return helperWrapper.response(response, 400, "Bad Request", null);
+    }
+  },
+  resetPasswordCompany: async (request, response) => {
+    try {
+      const { keyChangePassword, newPassword, confirmPassword } = request.body;
+      const checkResult = await authModel.getOTPCompany(keyChangePassword);
+      if (checkResult.length <= 0) {
+        return helperWrapper.response(
+          response,
+          404,
+          `your key is not valid`,
+          null
+        );
+      }
+      const id = checkResult[0].id;
+      // eslint-disable-next-line no-restricted-syntax
+      if (newPassword !== confirmPassword) {
+        return helperWrapper.response(
+          response,
+          400,
+          "password Not Match",
+          null
+        );
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(confirmPassword, salt);
+      const setData = {
+        confirmPassword: hash,
+        updatedAt: new Date(Date.now()),
+      };
+      // eslint-disable-next-line no-restricted-syntax
+      for (const data in setData) {
+        if (!setData[data]) {
+          delete setData[data];
+        }
+      }
+      const result = await authModel.updatePasswordCompany(id, hash, setData);
+
+      //   response.status(200);
+      //   response.send("hello world");
+      return helperWrapper.response(
+        response,
+        200,
+        "succes reset Password",
+        result
+      );
+    } catch (error) {
+      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },

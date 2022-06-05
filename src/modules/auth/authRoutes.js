@@ -14,6 +14,8 @@ Router.post("/logout", authController.logout);
 Router.post("/company/register", authController.registerCompany);
 Router.post("/company/login", authController.loginCompany);
 Router.post("/company/refresh", authController.refreshCompany);
+Router.post("/company/forgotPassword", authController.forgotPasswordCompany);
+Router.patch("/company/resetPassword", authController.resetPasswordCompany);
 // Router.post("/login", authController.login);
 // Router.post("/refresh", authController.refresh);
 // Router.post("/logout", authController.logout);

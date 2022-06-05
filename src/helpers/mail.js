@@ -30,7 +30,7 @@ module.exports = {
       });
 
       const fileTemplate = fs.readFileSync(
-        `src/templates/email/${data.template}`,
+        `src/template/email/${data.template}`,
         "utf8"
       );
 

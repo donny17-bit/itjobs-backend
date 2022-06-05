@@ -49,7 +49,7 @@ module.exports = {
         return helperWrapper.response(
           response,
           403,
-          "only admin can change the data",
+          "you're not login as company",
           null
         );
       }

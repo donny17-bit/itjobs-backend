@@ -99,6 +99,34 @@ module.exports = {
         }
       );
     }),
+  setOTPCompany: (email, otp) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE company SET companyOTP= '${otp}' WHERE email="${email}"`,
+        (error) => {
+          if (!error) {
+            const newResult = "email active";
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  getOTPCompany: (keyChangePassword) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM company WHERE companyOTP=?",
+        keyChangePassword,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
   getUserByEmail: (email) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -210,6 +238,23 @@ module.exports = {
     new Promise((resolve, reject) => {
       connection.query(
         `UPDATE user SET password='${hash}' WHERE id='${id}'`,
+        (error) => {
+          if (!error) {
+            const newResult = {
+              id,
+              ...data,
+            };
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  updatePasswordCompany: (id, hash, data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE company SET password='${hash}' WHERE id='${id}'`,
         (error) => {
           if (!error) {
             const newResult = {
