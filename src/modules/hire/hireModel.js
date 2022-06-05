@@ -1,6 +1,16 @@
 const connection = require("../../config/mysql");
 
 module.exports = {
+  getHireById: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query("SELECT * FROM hire WHERE id=?", id, (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(new Error(error.sqlMessage));
+        }
+      });
+    }),
   getHireByUserId: (userId) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -25,25 +35,28 @@ module.exports = {
           };
           resolve(newResult);
         } else {
+          console.log(error);
           reject(new Error(error.sqlMessage));
         }
       });
     }),
   getUserById: (id) =>
     new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM user WHERE id=?", id, (error, result) => {
-        if (!error) {
-          resolve(result);
-        } else {
-          reject(new Error(error.sqlMessage));
+      connection.query(
+        `SELECT * FROM user WHERE id='${id}'`,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
         }
-      });
+      );
     }),
   getCompanyById: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM company WHERE id=?",
-        id,
+        `SELECT * FROM company WHERE id='${id}'`,
         (error, result) => {
           if (!error) {
             resolve(result);

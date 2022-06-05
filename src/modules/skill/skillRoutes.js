@@ -2,7 +2,7 @@ const express = require("express");
 
 const Router = express.Router();
 
-const skillController = require("./SkillController");
+const skillController = require("./skillController");
 const middlewareAuth = require("../../middleware/auth");
 
 Router.get(
