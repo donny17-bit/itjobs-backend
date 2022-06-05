@@ -5,12 +5,11 @@ const helperWrapper = require("../../helpers/wrapper");
 const userModel = require("./userModel");
 const cloudinary = require("../../config/cloudinary");
 const { image } = require("../../config/cloudinary");
-// const { image } = require("../../config/cloudinary");
 
 module.exports = {
   getAllUser: async (request, response) => {
     try {
-      let { page, limit, searchName, sort } = request.query;
+      let { page, limit, searchSkill, sort } = request.query;
       // limit and page search process
       page = Number(page);
       if (!page) {
@@ -25,30 +24,41 @@ module.exports = {
       const totalPage = Math.ceil(totalData / limit);
 
       // search name release validation
-      if (!searchName) {
-        searchName = null;
+      if (!searchSkill) {
+        searchSkill = "";
       }
 
-      //   const sortFreelance = "freelance";
-      //   const sortFulltime = "fulltime";
-
-      //   if (!sortFreelance) {
-      //     sort = sortFulltime;
-      //   }
-      //   if (!sortFulltime) {
-      //     sort = sortFreelance;
-      //   }
       // sorting process and validation
       if (!sort) {
-        sort = "fullName ASC";
+        sort = "";
       }
-      const result = await userModel.getAllUser(
-        limit,
-        offset,
-        searchName,
-        sort
+
+      const result = await userModel.getAllUser(limit, offset, sort);
+
+      const newResult = await Promise.all(
+        result.map(async (item) => {
+          let dataSkill = await userModel.getSkillById(
+            item.id,
+            searchSkill,
+            sort
+          );
+          dataSkill = dataSkill.map((value) => value.skill);
+          const newData = { ...item, skill: dataSkill };
+          return newData;
+        })
       );
-      const dataSearchFound = result.length;
+
+      const filterResult = newResult.filter((item) => item.skill.length > 0);
+      const sortResult = filterResult.sort(function (b, a) {
+        const keyA = a.skill.length;
+        const keyB = b.skill.length;
+        // Compare the 2 dates
+        if (keyA < keyB) return -1;
+        if (keyA > keyB) return 1;
+        return 0;
+      });
+
+      const dataSearchFound = sortResult.length;
       const pageinfo = {
         dataSearchFound,
         page,
@@ -60,7 +70,7 @@ module.exports = {
         response,
         200,
         "succes get data",
-        result,
+        sortResult,
         pageinfo
       );
     } catch (error) {
@@ -80,7 +90,17 @@ module.exports = {
           null
         );
       }
-      return helperWrapper.response(response, 200, "succes get data", result);
+      const skill = result.map((item) => item.skill);
+      const resultUser = {
+        ...result[0],
+        skill,
+      };
+      return helperWrapper.response(
+        response,
+        200,
+        "succes get data",
+        resultUser
+      );
     } catch (error) {
       console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);

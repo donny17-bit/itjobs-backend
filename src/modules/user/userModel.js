@@ -14,12 +14,24 @@ module.exports = {
         }
       );
     }),
-
-  getAllUser: (limit, offset, searchName, sort) =>
+  getAllUser: (limit, offset) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM user WHERE fullName LIKE '%${searchName}%' OR role='${sort}' LIMIT ? OFFSET ?`,
+        `SELECT * FROM user  LIMIT ? OFFSET ?`,
         [limit, offset],
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  getSkillById: (id, searchSkill, sort) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT user.fullName,user.image,user.address,user.role,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE userId='${id}' AND user.role LIKE'%${sort}%' AND skill LIKE '%${searchSkill}%'  `,
         (error, result) => {
           if (!error) {
             resolve(result);
@@ -31,13 +43,17 @@ module.exports = {
     }),
   getUserByUserId: (id) =>
     new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM user WHERE id=?", id, (error, result) => {
-        if (!error) {
-          resolve(result);
-        } else {
-          reject(new Error(error.sqlMessage));
+      connection.query(
+        "SELECT user.fullName,user.image,user.address,user.role,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE user.id=?",
+        id,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
         }
-      });
+      );
     }),
   updateProfile: (id, data) =>
     new Promise((resolve, reject) => {

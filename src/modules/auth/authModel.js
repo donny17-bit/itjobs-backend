@@ -71,6 +71,34 @@ module.exports = {
         }
       );
     }),
+  setOTP: (email, otp) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE user SET userOTP= '${otp}' WHERE email="${email}"`,
+        (error) => {
+          if (!error) {
+            const newResult = "email active";
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  getOTP: (keyChangePassword) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM user WHERE userOTP=?",
+        keyChangePassword,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
   getUserByEmail: (email) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -145,6 +173,50 @@ module.exports = {
         (error, result) => {
           if (!error) {
             resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  verify: (id, data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE user SET status='active' WHERE id="${id}"`,
+        (error) => {
+          if (!error) {
+            const newResult = {
+              id,
+              ...data,
+            };
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  getUserByUserId: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query("SELECT * FROM user WHERE id=?", id, (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(new Error(error.sqlMessage));
+        }
+      });
+    }),
+  updatePassword: (id, hash, data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE user SET password='${hash}' WHERE id='${id}'`,
+        (error) => {
+          if (!error) {
+            const newResult = {
+              id,
+              ...data,
+            };
+            resolve(newResult);
           } else {
             reject(new Error(error.sqlMessage));
           }

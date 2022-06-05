@@ -28,11 +28,12 @@ module.exports = {
           accessToken,
         },
       });
+
       const fileTemplate = fs.readFileSync(
-        `/src/template/email/${data.template}`,
+        `src/templates/email/${data.template}`,
         "utf8"
       );
-      console.log(fileTemplate);
+
       const mailOption = {
         from: '"ITjobs" <itjobsproject@gmail.com>',
         to: data.to,
