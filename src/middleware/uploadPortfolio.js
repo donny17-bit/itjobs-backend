@@ -18,15 +18,16 @@ const upload = multer({
       !(
         file.mimetype === "image/png" ||
         file.mimetype === "image/jpg" ||
-        file.mimetype === "image/jpeg"
+        file.mimetype === "image/jpeg" ||
+        file.mimetype === "image/gif"
       )
     ) {
-      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+      return cb(new Error("Only .png, .jpg .jpeg and .gif format allowed!"));
     }
 
     const fileSize = parseInt(req.headers["content-length"]);
-    if (fileSize > 1048576) {
-      return cb(new Error("file must be under 1 MB"));
+    if (fileSize > 10048576) {
+      return cb(new Error("file must be under 10 MB"));
     }
     cb(null, true);
   },

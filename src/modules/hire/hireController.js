@@ -42,6 +42,10 @@ module.exports = {
           to: user.email,
           subject: result.subject,
           template: "hiring.html",
+          name: user.fullName,
+          companyName: company.fullName,
+          noTelp: company.noTelp,
+          subject: subject,
         };
         await helperMailer.sendMail(dataMailing);
         return helperWrapper.response(
