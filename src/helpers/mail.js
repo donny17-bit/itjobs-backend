@@ -29,16 +29,31 @@ module.exports = {
         },
       });
       const fileTemplate = fs.readFileSync(
-        `/src/template/email/${data.template}`,
+        `src/template/email/${data.template}`,
         "utf8"
       );
-      console.log(fileTemplate);
-      const mailOption = {
-        from: '"ITjobs" <itjobsproject@gmail.com>',
-        to: data.to,
-        subject: data.subject,
-        html: mustache.render(fileTemplate, { ...data }),
-      };
+      let mailOption;
+      if (!data.path) {
+        mailOption = {
+          from: '"ITjobs" <itjobsproject@gmail.com>',
+          to: data.to,
+          subject: data.subject,
+          html: mustache.render(fileTemplate, { ...data }),
+        };
+      } else {
+        mailOption = {
+          from: '"ITjobs" <itjobsproject@gmail.com>',
+          to: data.to,
+          subject: data.subject,
+          html: mustache.render(fileTemplate, { ...data }),
+          attachments: [
+            {
+              filename: data.filename,
+              path: data.path,
+            },
+          ],
+        };
+      }
 
       transporter.sendMail(mailOption, (error, info) => {
         if (error) {
