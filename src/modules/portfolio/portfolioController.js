@@ -28,7 +28,7 @@ module.exports = {
     try {
       const userId = request.params;
       const { appName, linkRepo } = request.body;
-      console.log(request.files);
+
       let image;
 
       if (request.file) {
