@@ -53,4 +53,35 @@ module.exports = {
         }
       });
     }),
+  getCountSkill: (userId) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT COUNT (*) AS total FROM skill WHERE userId='${userId}'`,
+        (error, result) => {
+          if (!error) {
+            resolve(result[0].total);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+  updateProfile: (id, data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "UPDATE user SET ? WHERE id = ?",
+        [data, id],
+        (error) => {
+          if (!error) {
+            const newResult = {
+              id,
+              ...data,
+            };
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
 };
