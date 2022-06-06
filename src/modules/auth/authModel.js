@@ -268,4 +268,21 @@ module.exports = {
         }
       );
     }),
+  verifyCompany: (id, data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE company SET status='active' WHERE id="${id}"`,
+        (error) => {
+          if (!error) {
+            const newResult = {
+              id,
+              ...data,
+            };
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
 };

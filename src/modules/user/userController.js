@@ -32,7 +32,9 @@ module.exports = {
       if (!sort) {
         sort = "";
       }
-
+      if (sort === "adress") {
+        data = "ORDER BY user.adress ASC";
+      }
       const result = await userModel.getAllUser(limit, offset, sort);
 
       const newResult = await Promise.all(
