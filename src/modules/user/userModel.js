@@ -31,7 +31,7 @@ module.exports = {
   getSkillById: (id, searchSkill, sort) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT user.fullName,user.image,user.address,user.role,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE userId='${id}' AND user.role LIKE'%${sort}%' AND skill LIKE '%${searchSkill}%'  `,
+        `SELECT user.fullName,user.image,user.address,user.role,user.field,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE userId='${id}' AND user.role LIKE'%${sort}%' AND skill LIKE '%${searchSkill}%'   `,
         (error, result) => {
           if (!error) {
             resolve(result);
@@ -44,8 +44,8 @@ module.exports = {
   getUserByUserId: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT user.fullName,user.image,user.address,user.role,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE user.id=?",
-        id,
+        `SELECT * FROM user WHERE id='${id}'`,
+
         (error, result) => {
           if (!error) {
             resolve(result);
