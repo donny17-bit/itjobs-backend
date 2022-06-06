@@ -8,15 +8,6 @@ module.exports = {
       const { userId } = request.params;
       const result = await skillModel.getSkillByUserId(userId);
 
-      if (result.length <= 0) {
-        return helperWrapper.response(
-          response,
-          404,
-          `Id ${userId} has not added skill yet`,
-          null
-        );
-      }
-
       return helperWrapper.response(response, 200, "succes get data !", result);
     } catch (error) {
       return helperWrapper.response(response, 404, "Bad request", null);
@@ -32,14 +23,24 @@ module.exports = {
       };
       const result = await skillModel.createSkill(dataCreate);
 
+      const Alldata = await skillModel.getSkillByUserId(userId);
+      const totalSkill = Alldata.length;
+      const skill = Alldata.map((item) => item.skill).join(",");
+
+      const update = {
+        totalSkill: totalSkill,
+        skill: skill,
+        updatedAt: new Date(Date.now()),
+      };
+      const updateSkill = await skillModel.updateProfile(userId, update);
+
       return helperWrapper.response(
         response,
         200,
-        "Success post data !",
+        `Success post data !, your skills now have ${totalSkill}`,
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 404, "Bad request", null);
     }
   },
@@ -59,10 +60,23 @@ module.exports = {
 
       const result = await skillModel.deleteSkill(id);
 
+      const userId = data[0].userId;
+      const Alldata = await skillModel.getSkillByUserId(userId);
+
+      const totalSkill = Alldata.length;
+      const skill = Alldata.map((item) => item.skill).join(",");
+
+      const update = {
+        totalSkill: totalSkill,
+        skill: skill,
+        updatedAt: new Date(Date.now()),
+      };
+      const updateSkill = await skillModel.updateProfile(userId, update);
+
       return helperWrapper.response(
         response,
         200,
-        "Success delete skill",
+        `Success delete skill, your skill now remaining ${totalSkill}`,
         result
       );
     } catch (error) {
