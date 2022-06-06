@@ -6,11 +6,7 @@ const portfolioController = require("./portfolioController");
 const middlewareUpload = require("../../middleware/uploadPortfolio");
 const middlewareAuth = require("../../middleware/auth");
 
-Router.get(
-  "/:userId",
-  middlewareAuth.userAuthentication,
-  portfolioController.getPortfolio
-);
+Router.get("/:userId", portfolioController.getPortfolio);
 Router.post(
   "/:userId",
   middlewareAuth.userAuthentication,

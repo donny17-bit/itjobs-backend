@@ -6,11 +6,7 @@ const companyController = require("./companyController");
 const middlewareAuth = require("../../middleware/auth");
 const middlewareUploadImage = require("../../middleware/uploadImageUser");
 
-Router.get(
-  "/:id",
-  middlewareAuth.isAdminAuthentication,
-  companyController.getCompanyByCompanyId
-);
+Router.get("/:id", companyController.getCompanyByCompanyId);
 Router.patch(
   "/updateCompanyProfile/:id",
   middlewareAuth.isAdminAuthentication,
