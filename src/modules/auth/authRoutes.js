@@ -13,7 +13,9 @@ Router.patch("/user/resetPassword", authController.resetPassword);
 Router.post("/logout", authController.logout);
 Router.post("/company/register", authController.registerCompany);
 Router.post("/company/login", authController.loginCompany);
+
 Router.post("/company/refresh", authController.refreshCompany);
+Router.patch("/company/verify/:id", authController.verifyCompany);
 Router.post("/company/forgotPassword", authController.forgotPasswordCompany);
 Router.patch("/company/resetPassword", authController.resetPasswordCompany);
 // Router.post("/login", authController.login);
