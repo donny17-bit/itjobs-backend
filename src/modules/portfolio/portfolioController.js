@@ -27,7 +27,7 @@ module.exports = {
   createPortfolio: async (request, response) => {
     try {
       const userId = request.params;
-      const { appName, linkRepo } = request.body;
+      const { appName, linkRepo, workPlace, publicationLink } = request.body;
 
       let image;
 
@@ -56,6 +56,8 @@ module.exports = {
         userId: userId.userId,
         appName,
         linkRepo,
+        workPlace,
+        publicationLink,
         image,
         createdAt: new Date(Date.now()),
       };
@@ -74,7 +76,7 @@ module.exports = {
   updatePortfolio: async (request, response) => {
     try {
       const { id } = request.params;
-      const { appName, linkRepo } = request.body;
+      const { appName, linkRepo, workPlace, publicationLink } = request.body;
       let image;
 
       if (request.file) {
@@ -108,6 +110,8 @@ module.exports = {
         appName,
         linkRepo,
         image,
+        workPlace,
+        publicationLink,
         updateAt: new Date(Date.now()),
       };
 
