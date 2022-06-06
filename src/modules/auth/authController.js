@@ -420,6 +420,8 @@ module.exports = {
           null
         );
       }
+
+      const result = await authModel.registerCompany(setData);
       const setSendEmail = {
         to: email,
         subject: "Email Verification !",
@@ -427,9 +429,9 @@ module.exports = {
         template: "verificationEmail company.html",
         authCode: result.id,
         buttonUrl: `google.com`,
+        linkENV: process.env.LINK_BACKEND,
       };
       await helperMailer.sendMail(setSendEmail);
-      const result = await authModel.registerCompany(setData);
       //   const dataId = result.email;
       return helperWrapper.response(
         response,
