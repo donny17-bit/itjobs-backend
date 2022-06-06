@@ -22,9 +22,14 @@ module.exports = {
         ...data,
       };
       const result = await skillModel.createSkill(dataCreate);
-      const totalSkill = await skillModel.getCountSkill(userId);
+
+      const Alldata = await skillModel.getSkillByUserId(userId);
+      const totalSkill = Alldata.length;
+      const skill = Alldata.map((item) => item.skill).join(",");
+
       const update = {
         totalSkill: totalSkill,
+        skill: skill,
         updatedAt: new Date(Date.now()),
       };
       const updateSkill = await skillModel.updateProfile(userId, update);
@@ -43,8 +48,6 @@ module.exports = {
     try {
       const { id } = request.params;
       const data = await skillModel.getSkillById(id);
-      const userId = data[0].userId;
-      console.log(data[0].userId);
 
       if (data.length <= 0) {
         return helperWrapper.response(
@@ -56,9 +59,16 @@ module.exports = {
       }
 
       const result = await skillModel.deleteSkill(id);
-      const totalSkill = await skillModel.getCountSkill(userId);
+
+      const userId = data[0].userId;
+      const Alldata = await skillModel.getSkillByUserId(userId);
+
+      const totalSkill = Alldata.length;
+      const skill = Alldata.map((item) => item.skill).join(",");
+
       const update = {
         totalSkill: totalSkill,
+        skill: skill,
         updatedAt: new Date(Date.now()),
       };
       const updateSkill = await skillModel.updateProfile(userId, update);
