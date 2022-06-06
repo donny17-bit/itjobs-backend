@@ -90,17 +90,12 @@ module.exports = {
           null
         );
       }
-      const skill = result.map((item) => item.skill);
-      const resultUser = {
-        ...result[0],
-        skill,
-      };
-      return helperWrapper.response(
-        response,
-        200,
-        "succes get data",
-        resultUser
-      );
+      // const skill = result.map((item) => item.skill);
+      // const resultUser = {
+      //   ...result[0],
+      //   skill,
+      // };
+      return helperWrapper.response(response, 200, "succes get data", result);
     } catch (error) {
       console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
@@ -119,11 +114,12 @@ module.exports = {
         );
       }
 
-      const { fullName, role, address, socialMedia, description } =
+      const { fullName, role, address, socialMedia, description, field } =
         request.body;
       const setData = {
         fullName,
         role,
+        field,
         address,
         socialMedia,
         description,

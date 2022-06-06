@@ -84,6 +84,7 @@ module.exports = {
         template: "verificationEmail.html",
         authCode: result.id,
         buttonUrl: `google.com`,
+        linkENV: process.env.LINK_BACKEND,
       };
       await helperMailer.sendMail(setSendEmail);
       // activation code
@@ -246,6 +247,7 @@ module.exports = {
         subject: "Forgot Password Verification!",
         template: "forgotPassword.html",
         otpKey: otp,
+        linkENV: process.env.LINK_FRONTEND,
         buttonUrl: otp,
       };
       await helperMailer.sendMail(setSendEmail);
@@ -542,9 +544,10 @@ module.exports = {
       const setSendEmail = {
         to: email,
         subject: "Forgot Password Verification!",
-        template: "forgotPassword.html",
+        template: "forgotPassword company.html",
         otpKey: otp,
         buttonUrl: otp,
+        linkENV: process.env.LINK_BACKEND,
       };
       await helperMailer.sendMail(setSendEmail);
       // activation code
