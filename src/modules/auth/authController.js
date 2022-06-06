@@ -352,6 +352,7 @@ module.exports = {
         noTelp,
         password: hash,
       };
+
       if (!fullName) {
         return helperWrapper.response(
           response,
@@ -419,7 +420,18 @@ module.exports = {
           null
         );
       }
+
       const result = await authModel.registerCompany(setData);
+      const setSendEmail = {
+        to: email,
+        subject: "Email Verification !",
+        name: companyName,
+        template: "verificationEmail company.html",
+        authCode: result.id,
+        buttonUrl: `google.com`,
+        linkENV: process.env.LINK_BACKEND,
+      };
+      await helperMailer.sendMail(setSendEmail);
       //   const dataId = result.email;
       return helperWrapper.response(
         response,
@@ -445,7 +457,7 @@ module.exports = {
           null
         );
       }
-      if (checkUser[0].status === "not active") {
+      if (checkUser[0].status === "notActive") {
         return helperWrapper.response(
           response,
           404,
@@ -524,6 +536,37 @@ module.exports = {
       });
     } catch (error) {
       return helperWrapper.response(response, 400, "Bad Request", null);
+    }
+  },
+  verifyCompany: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const checkResult = await authModel.getCompanyByCompanyId(id);
+      if (checkResult.length <= 0) {
+        return helperWrapper.response(
+          response,
+          404,
+          `Data by id ${id} not found`,
+          null
+        );
+      }
+
+      const result = await authModel.verifyCompany(id);
+
+      return helperWrapper.response(
+        response,
+        200,
+        "succes verify account",
+        result
+      );
+    } catch (error) {
+      console.log(error);
+      return helperWrapper.response(
+        response,
+        400,
+        "failed verify account",
+        null
+      );
     }
   },
   forgotPasswordCompany: async (request, response) => {
