@@ -5,11 +5,7 @@ const Router = express.Router();
 const experienceController = require("./experienceController");
 const middlewareAuth = require("../../middleware/auth");
 
-Router.get(
-  "/:userId",
-  middlewareAuth.userAuthentication,
-  experienceController.getExperience
-);
+Router.get("/:userId", experienceController.getExperience);
 Router.post(
   "/:userId",
   middlewareAuth.userAuthentication,

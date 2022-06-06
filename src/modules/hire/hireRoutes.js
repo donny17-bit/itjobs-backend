@@ -6,11 +6,7 @@ const hireController = require("./hireController");
 const middlewareAuth = require("../../middleware/auth");
 const middlewareUpload = require("../../middleware/uploadPdf");
 
-Router.get(
-  "/:userId",
-  middlewareAuth.userAuthentication,
-  hireController.getHire
-);
+Router.get("/:userId", hireController.getHire);
 Router.post(
   "/:userId",
   middlewareUpload,
