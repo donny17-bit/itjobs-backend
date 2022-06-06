@@ -79,8 +79,8 @@ module.exports = {
         const deleteHire = await hireModel.deleteHire(result.id);
         return helperWrapper.response(
           response,
-          200,
-          "email failed to send",
+          404,
+          "user not found",
           deleteHire
         );
       }
