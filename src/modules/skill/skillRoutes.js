@@ -5,11 +5,7 @@ const Router = express.Router();
 const skillController = require("./skillController");
 const middlewareAuth = require("../../middleware/auth");
 
-Router.get(
-  "/:userId",
-  middlewareAuth.userAuthentication,
-  skillController.getSkill
-);
+Router.get("/:userId", skillController.getSkill);
 Router.post(
   "/:userId",
   middlewareAuth.userAuthentication,
