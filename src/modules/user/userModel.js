@@ -14,10 +14,16 @@ module.exports = {
         }
       );
     }),
-  getAllUser: (limit, offset) =>
+  getAllUser: (limit, offset, searchSkill, sort) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM user  LIMIT ? OFFSET ?`,
+        `SELECT * FROM user WHERE ${
+          searchSkill == "" ? "" : `skill LIKE '%${searchSkill}%' AND `
+        }   status ="active" ${
+          sort === "skill"
+            ? "ORDER BY totalSkill DESC"
+            : `AND role LIKE '%${sort}%'`
+        } LIMIT ? OFFSET ? `,
         [limit, offset],
         (error, result) => {
           if (!error) {
@@ -28,10 +34,11 @@ module.exports = {
         }
       );
     }),
+
   getSkillById: (id, searchSkill, sort) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT user.fullName,user.image,user.address,user.role,user.field,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE userId='${id}' AND user.role LIKE'%${sort}%' AND skill LIKE '%${searchSkill}%'   `,
+        `SELECT user.fullName,user.image,user.address,user.role,user.field,skill.userId,skill.skill FROM skill jOIN user ON user.id=skill.userId WHERE userId='${id}' AND skill LIKE '%${searchSkill}%'  AND user.role LIKE'%${sort}%'   `,
         (error, result) => {
           if (!error) {
             resolve(result);

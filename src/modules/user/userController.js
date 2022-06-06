@@ -35,32 +35,14 @@ module.exports = {
       if (sort === "adress") {
         data = "ORDER BY user.adress ASC";
       }
-      const result = await userModel.getAllUser(limit, offset, sort);
-
-      const newResult = await Promise.all(
-        result.map(async (item) => {
-          let dataSkill = await userModel.getSkillById(
-            item.id,
-            searchSkill,
-            sort
-          );
-          dataSkill = dataSkill.map((value) => value.skill);
-          const newData = { ...item, skill: dataSkill };
-          return newData;
-        })
+      const result = await userModel.getAllUser(
+        limit,
+        offset,
+        searchSkill,
+        sort
       );
 
-      const filterResult = newResult.filter((item) => item.skill.length > 0);
-      const sortResult = filterResult.sort(function (b, a) {
-        const keyA = a.skill.length;
-        const keyB = b.skill.length;
-        // Compare the 2 dates
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-      });
-
-      const dataSearchFound = sortResult.length;
+      const dataSearchFound = result.length;
       const pageinfo = {
         dataSearchFound,
         page,
@@ -72,7 +54,7 @@ module.exports = {
         response,
         200,
         "succes get data",
-        sortResult,
+        result,
         pageinfo
       );
     } catch (error) {
@@ -80,6 +62,7 @@ module.exports = {
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
+
   getUserByUserId: async (request, response) => {
     try {
       const { id } = request.params;
