@@ -111,7 +111,7 @@ note: don't drop or remove table and database
 | --- | ------ | ------------------------- | ------------------------------------- |
 | 1.  | GET    | /experience/:userId       | Used for get experience by user by id |
 | 2.  | POST   | /experience/:userId       | Used to create experience user        |
-| 3.  | PATCH  | /experience/:userId       | Used for udpate experience user       |
+| 3.  | PATCH  | /experience/:experienceId | Used for udpate experience user       |
 | 4.  | DEL    | /experience/:experienceId | Used to delete experience for user    |
 
 ### Module Skill
@@ -132,18 +132,18 @@ note: don't drop or remove table and database
 | --- | ------ | ------------------- | ------------------------------------- |
 | 1.  | GET    | /portofolio/:userId | Used for get portofolio by user by id |
 | 2.  | POST   | /portofolio/:userId | Used to create portofolio user        |
-| 3.  | PATCH  | /portofolio/:userId | Used for udpate portofolio user       |
+| 3.  | PATCH  | /portofolio/:id     | Used for udpate portofolio user       |
 | 4.  | DEL    | /portofolio/:id     | Used to delete portofolio for user    |
 
 ### Module Hire
 
 **Used for company to hire user**
 
-| No. | Method | Endpoint      | Information                     |
-| --- | ------ | ------------- | ------------------------------- |
-| 1.  | GET    | /hire/:userId | Used for get hire by user by id |
-| 2.  | POST   | /hire/:userId | Used to create user hire        |
-| 3.  | DEL    | /hire/:hireId | Used to delete hire for company |
+| No. | Method | Endpoint           | Information                     |
+| --- | ------ | ------------------ | ------------------------------- |
+| 1.  | GET    | /hire/:userId      | Used for get hire by user by id |
+| 2.  | POST   | /hire/:companyId   | Used to create user hire        |
+| 3.  | DEL    | /hire/:hireId      | Used to delete hire for company |
 
 ### JSON Format
 
