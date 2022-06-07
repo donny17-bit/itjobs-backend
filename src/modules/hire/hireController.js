@@ -73,7 +73,7 @@ module.exports = {
           response,
           200,
           "Success post data, your email was sent to the user",
-          result
+          { ...result, companyName: company[0].companyName }
         );
       } else {
         const deleteHire = await hireModel.deleteHire(result.id);
