@@ -8,7 +8,7 @@ const middlewareUpload = require("../../middleware/uploadPdf");
 
 Router.get("/:userId", hireController.getHire);
 Router.post(
-  "/:userId",
+  "/:companyId",
   middlewareUpload,
   middlewareAuth.isAdminAuthentication,
   hireController.createHire
