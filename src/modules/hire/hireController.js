@@ -13,7 +13,7 @@ module.exports = {
       if (result.length <= 0) {
         return helperWrapper.response(
           response,
-          404,
+          200,
           `Id ${userId} never been hired`,
           null
         );
