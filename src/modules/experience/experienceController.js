@@ -11,7 +11,7 @@ module.exports = {
       if (result.length <= 0) {
         return helperWrapper.response(
           response,
-          404,
+          200,
           `Id ${userId} has not added experience yet`,
           null
         );
