@@ -1,10 +1,16 @@
 const connection = require("../../config/mysql");
 
 module.exports = {
-  getCountUser: () =>
+  getCountUser: (searchSkill, sort) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT COUNT (*) AS total FROM user",
+        `SELECT COUNT (*) AS total FROM user WHERE ${
+          searchSkill == "" ? "" : `skill LIKE '%${searchSkill}%' AND `
+        }   status ="active" ${
+          sort === "skill"
+            ? "ORDER BY totalSkill DESC"
+            : `AND role LIKE '%${sort}%'`
+        } `,
         (error, result) => {
           if (!error) {
             resolve(result[0].total);

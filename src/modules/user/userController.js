@@ -20,7 +20,7 @@ module.exports = {
         limit = 100;
       }
       const offset = page * limit - limit;
-      const totalData = await userModel.getCountUser();
+      const totalData = await userModel.getCountUser(searchSkill, sort);
       const totalPage = Math.ceil(totalData / limit);
 
       // search name release validation
@@ -32,17 +32,15 @@ module.exports = {
       if (!sort) {
         sort = "";
       }
-      if (sort === "adress") {
-        data = "ORDER BY user.adress ASC";
-      }
+
       const result = await userModel.getAllUser(
         limit,
         offset,
         searchSkill,
         sort
       );
-
       const dataSearchFound = result.length;
+
       const pageinfo = {
         dataSearchFound,
         page,
@@ -50,6 +48,7 @@ module.exports = {
         limit,
         totalData,
       };
+
       return helperWrapper.response(
         response,
         200,
