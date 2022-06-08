@@ -426,7 +426,7 @@ module.exports = {
         to: email,
         subject: "Email Verification !",
         name: companyName,
-        template: "verificationEmail company.html",
+        template: "verificationEmailCompany.html",
         authCode: result.id,
         buttonUrl: `google.com`,
         linkENV: process.env.LINK_BACKEND,
@@ -587,7 +587,7 @@ module.exports = {
       const setSendEmail = {
         to: email,
         subject: "Forgot Password Verification!",
-        template: "forgotPassword company.html",
+        template: "forgotPasswordCompany.html",
         otpKey: otp,
         buttonUrl: otp,
         linkENV: process.env.LINK_BACKEND,
