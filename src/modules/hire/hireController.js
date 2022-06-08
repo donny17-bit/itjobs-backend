@@ -35,8 +35,6 @@ module.exports = {
         userId,
         subject,
       };
-      console.log(company);
-
       const result = await hireModel.createHire(dataCreate);
       const user = await hireModel.getUserById(result.userId);
 
@@ -53,7 +51,6 @@ module.exports = {
             filename: request.file.filename,
             path: request.file.path,
           };
-          console.log(dataMailing);
           await helperMailer.sendMail(dataMailing);
           await fs.unlink(`${request.file.path}`, (err) => {
             if (err) throw err;
@@ -68,7 +65,6 @@ module.exports = {
             subject: subject,
             description: description,
           };
-          console.log(dataMailing);
           await helperMailer.sendMail(dataMailing);
         }
         return helperWrapper.response(
@@ -113,7 +109,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },

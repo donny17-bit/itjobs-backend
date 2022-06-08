@@ -96,8 +96,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
-
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -152,14 +150,12 @@ module.exports = {
         refreshToken,
       });
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
   // eslint-disable-next-line consistent-return
   refresh: async (request, response) => {
     try {
-      console.log(request.body);
       const { refreshToken } = request.body;
       const checkToken = await redis.get(`refreshToken:${refreshToken}`);
       if (checkToken) {
@@ -185,7 +181,6 @@ module.exports = {
           3600 * 48,
           refreshToken
         );
-        console.log(result);
         return helperWrapper.response(response, 200, "Success refresh token", {
           id: result.id,
           token,
@@ -218,7 +213,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(
         response,
         400,
@@ -260,8 +254,6 @@ module.exports = {
         email
       );
     } catch (error) {
-      console.log(error);
-
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -302,8 +294,6 @@ module.exports = {
       }
       const result = await authModel.updatePassword(id, hash, setData);
 
-      //   response.status(200);
-      //   response.send("hello world");
       return helperWrapper.response(
         response,
         200,
@@ -311,7 +301,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -440,7 +429,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -465,8 +453,7 @@ module.exports = {
           null
         );
       }
-      // // validasi ROLE
-
+      // validasi ROLE
       const { password } = request.body;
       const checkPassword = await authModel.getUserByPasswordCompany(email);
       const stringPass = checkPassword[0].password;
@@ -494,14 +481,12 @@ module.exports = {
         refreshToken,
       });
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
   // eslint-disable-next-line consistent-return
   refreshCompany: async (request, response) => {
     try {
-      console.log(request.body);
       const { refreshToken } = request.body;
       const checkToken = await redis.get(`refreshToken:${refreshToken}`);
       if (checkToken) {
@@ -527,7 +512,6 @@ module.exports = {
           3600 * 48,
           refreshToken
         );
-        console.log(result);
         return helperWrapper.response(response, 200, "Success refresh token", {
           id: result.id,
           token,
@@ -560,7 +544,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(
         response,
         400,
@@ -602,8 +585,6 @@ module.exports = {
         email
       );
     } catch (error) {
-      console.log(error);
-
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -644,8 +625,6 @@ module.exports = {
       }
       const result = await authModel.updatePasswordCompany(id, hash, setData);
 
-      //   response.status(200);
-      //   response.send("hello world");
       return helperWrapper.response(
         response,
         200,
@@ -653,7 +632,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
