@@ -17,6 +17,17 @@
 - Link Heroku : https://itjobsproject.herokuapp.com/
 - Link Cloudinary : "https://res.cloudinary.com/itjobs/image/upload/v1654266716/"
 
+## Project Member
+
+| No. | Project Member         | Role      |
+| --- | ---------------------- | --------- |
+| 1.  | Muhammad Thariq Farsha | PM        |
+| 2.  | Tubagus Manix Hara     | Front End |
+| 3.  | Donny Wahyu            | Front End |
+| 4.  | Abdul Qodir Jaelani    | Front End |
+| 5.  | Mohd.Aflah Fernanda    | Back End  |
+| 6.  | Jauhar Maknun Adib     | Back End  |
+
 ## How It Works ?
 
 1. Download Postman Collection [[here](https://drive.google.com/file/d/1NtuQ54laE0NEfXGzNSnziLFf7SW9z1B9/view?usp=sharing)]
@@ -139,11 +150,11 @@ note: don't drop or remove table and database
 
 **Used for company to hire user**
 
-| No. | Method | Endpoint           | Information                     |
-| --- | ------ | ------------------ | ------------------------------- |
-| 1.  | GET    | /hire/:userId      | Used for get hire by user by id |
-| 2.  | POST   | /hire/:companyId   | Used to create user hire        |
-| 3.  | DEL    | /hire/:hireId      | Used to delete hire for company |
+| No. | Method | Endpoint         | Information                     |
+| --- | ------ | ---------------- | ------------------------------- |
+| 1.  | GET    | /hire/:userId    | Used for get hire by user by id |
+| 2.  | POST   | /hire/:companyId | Used to create user hire        |
+| 3.  | DEL    | /hire/:hireId    | Used to delete hire for company |
 
 ### JSON Format
 
