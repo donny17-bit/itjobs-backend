@@ -27,16 +27,18 @@ module.exports = {
   createHire: async (request, response) => {
     try {
       const { userId, subject, description } = request.body;
+      const company = await hireModel.getCompanyById(request.params.companyId);
       const dataCreate = {
         id: uuidv4(),
-        companyId: request.params.userId,
+        companyId: request.params.companyId,
+        companyName: company[0].companyName,
         userId,
         subject,
       };
+      console.log(company);
 
       const result = await hireModel.createHire(dataCreate);
       const user = await hireModel.getUserById(result.userId);
-      const company = await hireModel.getCompanyById(request.params.userId);
 
       if (user.length > 0) {
         if (request.file) {
@@ -73,7 +75,7 @@ module.exports = {
           response,
           200,
           "Success post data, your email was sent to the user",
-          { ...result, companyName: company[0].companyName }
+          result
         );
       } else {
         const deleteHire = await hireModel.deleteHire(result.id);
