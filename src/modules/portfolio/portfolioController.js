@@ -20,7 +20,6 @@ module.exports = {
 
       return helperWrapper.response(response, 200, "succes get data !", result);
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 404, "Bad request", null);
     }
   },
@@ -132,7 +131,6 @@ module.exports = {
         getdataresult
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },

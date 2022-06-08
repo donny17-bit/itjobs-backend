@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
 const { compareSync } = require("bcrypt");
 const helperWrapper = require("../../helpers/wrapper");
 const userModel = require("./userModel");
@@ -49,6 +48,8 @@ module.exports = {
         totalData,
       };
 
+      result.map((item) => delete item.password + delete item.UserOTP);
+
       return helperWrapper.response(
         response,
         200,
@@ -74,14 +75,12 @@ module.exports = {
           null
         );
       }
-      // const skill = result.map((item) => item.skill);
-      // const resultUser = {
-      //   ...result[0],
-      //   skill,
-      // };
+
+      delete result[0].password;
+      delete result[0].UserOTP;
+
       return helperWrapper.response(response, 200, "succes get data", result);
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -118,8 +117,6 @@ module.exports = {
 
       const result = await userModel.updateProfile(id, setData);
 
-      //   response.status(200);
-      //   response.send("hello world");
       return helperWrapper.response(
         response,
         200,
@@ -127,7 +124,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -173,7 +169,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -223,8 +218,6 @@ module.exports = {
       }
       const result = await userModel.updatePassword(id, hash, setData);
 
-      //   response.status(200);
-      //   response.send("hello world");
       return helperWrapper.response(
         response,
         200,
@@ -232,7 +225,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -265,7 +257,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },

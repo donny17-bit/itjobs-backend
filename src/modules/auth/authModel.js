@@ -254,7 +254,7 @@ module.exports = {
   updatePasswordCompany: (id, hash, data) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `UPDATE company SET password='${hash}',userOTP=null WHERE id='${id}'`,
+        `UPDATE company SET password='${hash}',companyOTP=null WHERE id='${id}'`,
         (error) => {
           if (!error) {
             const newResult = {
