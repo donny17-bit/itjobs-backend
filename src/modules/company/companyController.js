@@ -1,12 +1,10 @@
 const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
 const { compareSync } = require("bcrypt");
 const helperWrapper = require("../../helpers/wrapper");
 const userModel = require("./companyModel");
 const cloudinary = require("../../config/cloudinary");
 const { image } = require("../../config/cloudinary");
 const companyModel = require("./companyModel");
-// const { image } = require("../../config/cloudinary");
 
 module.exports = {
   getCompanyByCompanyId: async (request, response) => {
@@ -21,9 +19,10 @@ module.exports = {
           null
         );
       }
+      delete result[0].password;
+      delete result[0].companyOTP;
       return helperWrapper.response(response, 200, "succes get data", result);
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -68,8 +67,6 @@ module.exports = {
 
       const result = await companyModel.updateProfileCompany(id, setData);
 
-      //   response.status(200);
-      //   response.send("hello world");
       return helperWrapper.response(
         response,
         200,
@@ -77,7 +74,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -123,7 +119,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -131,7 +126,7 @@ module.exports = {
     try {
       const { id } = request.params;
       const checkResult = await companyModel.getCompanyByCompanyId(id);
-      console.log(checkResult);
+
       if (checkResult.length <= 0) {
         return helperWrapper.response(
           response,
@@ -177,8 +172,6 @@ module.exports = {
         setData
       );
 
-      //   response.status(200);
-      //   response.send("hello world");
       return helperWrapper.response(
         response,
         200,
@@ -186,7 +179,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -219,7 +211,6 @@ module.exports = {
         result
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
