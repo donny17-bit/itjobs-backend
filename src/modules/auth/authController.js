@@ -573,7 +573,7 @@ module.exports = {
         template: "forgotPasswordCompany.html",
         otpKey: otp,
         buttonUrl: otp,
-        linkENV: process.env.LINK_BACKEND,
+        linkENV: process.env.LINK_FRONTEND,
       };
       await helperMailer.sendMail(setSendEmail);
       // activation code
