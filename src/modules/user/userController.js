@@ -58,7 +58,6 @@ module.exports = {
         pageinfo
       );
     } catch (error) {
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
@@ -176,7 +175,6 @@ module.exports = {
     try {
       const { id } = request.params;
       const checkResult = await userModel.getUserByUserId(id);
-      console.log(checkResult);
       if (checkResult.length <= 0) {
         return helperWrapper.response(
           response,
