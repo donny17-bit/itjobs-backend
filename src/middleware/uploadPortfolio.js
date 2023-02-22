@@ -6,7 +6,7 @@ const helperWrapper = require("../helpers/wrapper");
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "portfolios",
+    folder: "itJobs/portfolios",
   },
 });
 const maxSize = 10048576;

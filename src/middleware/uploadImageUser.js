@@ -10,7 +10,7 @@ const helperWrapper = require("../helpers/wrapper");
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "profiles",
+    folder: "itJobs/profiles",
   },
 });
 // fungsi filefilter
