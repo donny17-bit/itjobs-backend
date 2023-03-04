@@ -14,7 +14,7 @@
 
 ## Link
 
-- Link Heroku : https://itjobsproject.herokuapp.com/
+- Link Delploy : https://itjobs-api.cyclic.app
 - Link Cloudinary : "https://res.cloudinary.com/itjobs/image/upload/v1654266716/"
 
 ## Project Member
